@@ -1,3 +1,12 @@
+// TODO: shouldn't be able to write html in chat
+// TODO: DB with authentication
+// TODO: DB save room converstations
+// TODO: Forgot password
+// TODO: Join multiple rooms
+// TODO: Create room option in chat.html
+
+require("./db/mongoose");
+
 const path = require("path");
 const http = require("http");
 const express = require("express");
@@ -58,13 +67,15 @@ io.on("connection", socket => {
       return callback("Profanity is not allowed!");
     }
 
+    const links = checkForLink(msg);
+    if (links) msg = generateLink(msg, links);
+
     const reciever = getUserByName(recieverUsername);
     const user = getUser(socket.id);
 
-    io.to(`${reciever.id}`).emit(
-      "privateMessage",
-      generateMessage(user.username, msg)
-    );
+    io.to(`${socket.id}`)
+      .to(`${reciever.id}`)
+      .emit("privateMessage", generateMessage(user.username, msg));
     callback();
   });
 
@@ -83,9 +94,7 @@ io.on("connection", socket => {
     io.to(user.room).emit("isTyping", user);
   });
 
-
   socket.on("join", (options, callback) => {
-    console.log(options);
     const { error, user } = addUser({ id: socket.id, ...options });
 
     if (error) {
