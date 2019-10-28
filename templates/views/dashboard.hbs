@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://kit.fontawesome.com/14b9bfad64.js"></script>
+
+</head>
+
+<body>
+  {{>navigation}}
+  <div class="centered-form">
+    <div class="centered-form__box">
+      <h1>{{title}}</h1>
+      <div class="accountListing-col">
+        <div class="listing-rooms">
+          <div id="roomsDiv" class="styled-list"> </div>
+          <div id="roomInfoWindow" class="chat__sidebar-info"></div>
+        </div>
+        <div id="roomInfoWindow" class="chat__sidebar-info"></div>
+      </div>
+      <hr>
+      <div class="accountListing-col">
+        <form action="/chat" method="GET">
+          <label>Create a new room</label>
+          <input type="text" name="room" id="roomNameInput" placeholder="Room name" required />
+          <input type="submit" value="Join room">
+        </form>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <script id="rooms-sidebar-template" type="text/x-handlebars-template">
+      <ul id="roomsList">
+        {{#if rooms}}
+          \{{#rooms}}
+            <li>
+              <i class="fas fa-sign-in-alt"></i>\{{activeRoom}}
+              <span class="usersonline">\{{usersOnline}}</span>
+            </li>
+          \{{/rooms}}
+        {{else}}
+          <h3 class="message-error">No active rooms</h3>
+        {{/if}}
+      </ul>
+    </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.2.0/handlebars.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+
+</html>

@@ -10,7 +10,6 @@
 
 ::-webkit-scrollbar-thumb {
   background: #1d1f26;
-  border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -34,12 +33,25 @@ input {
 body {
   line-height: 1.4;
   color: #333333;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
   margin-bottom: 16px;
+}
+
+a {
+  text-decoration: underline;
+  color: #333744;
+}
+
+a:hover {
+  color: #6b47b8;
+}
+
+hr {
+  color: #a1a1a1;
+  margin: 20px 0 20px 0;
 }
 
 label {
@@ -49,6 +61,11 @@ label {
   color: #777;
 }
 
+input:not(:placeholder-shown) {
+  border: 1px solid #e76767;
+  background-color: #ffb7aa;
+}
+
 input,
 select {
   border: 1px solid #eeeeee;
@@ -56,7 +73,13 @@ select {
   outline: none;
 }
 
-button {
+input:valid {
+  border: 1px solid #eeeeee;
+  background-color: #f1f1f1;
+}
+
+button,
+input[type="submit"] {
   cursor: pointer;
   padding: 12px;
   background: #7c5cbf;
@@ -66,7 +89,8 @@ button {
   transition: background 0.3s ease;
 }
 
-button:hover {
+button:hover,
+input[type="submit"]:hover {
   background: #6b47b8;
 }
 
@@ -85,22 +109,138 @@ i:hover {
   cursor: pointer;
 }
 
+li {
+  list-style-type: none;
+}
+
+.message-error {
+  color: #ee2400;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.message-success {
+  color: #22d85f;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.img-arrow {
+  display: block;
+  margin-top: 10px;
+  width: 40px;
+  float: right;
+  filter: invert(25%) hue-rotate(100deg);
+}
+
+.styled-list ul {
+  margin: 10px 10px;
+}
+
+.styled-list li {
+  height: fit-content;
+  padding: 8px 10px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.styled-list li:nth-child(odd) {
+  background-color: #b49ce9;
+}
+
+.styled-list li:last-child {
+  border-bottom: none;
+}
+
+/* Navigation bar styles */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: #2c2f3a;
+  color: #f7f7fa;
+  border-bottom: 1px solid #6b47b8;
+}
+
+nav a {
+  text-decoration: none;
+  color: #f7f7fa;
+}
+
+nav a:hover {
+  font-weight: 200;
+  color: #824dff;
+  text-shadow: 1px 1px 1px #333333;
+}
+
+.navbar__header {
+  margin: 0 50px;
+  display: inherit;
+  align-self: center;
+}
+
+.navbar__links {
+  text-transform: lowercase;
+}
+
+.navbar__links i {
+  margin-left: 10px;
+}
+
+.navbar__links li {
+  display: inline-block;
+  padding: 15px 30px;
+  margin-right: -4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar__links li:last-child {
+  margin-right: 0;
+}
+
+.navbar__links li:hover {
+  background-color: #a485e7;
+}
+
 /* Join Page Styles */
 
 .centered-form {
   background: #333744;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 53px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.centered-form__box {
-  box-shadow: 0px 0px 17px 1px #1d1f26;
+.centered-form__box-authenticate {
   background: #f7f7fa;
   padding: 24px;
-  width: 250px;
+  margin: 0 5px 0 0;
+  min-width: 300px;
+  position: fixed;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+.centered-form__box-authenticate h1 {
+  display: inline-block;
+}
+.centered-form__box-authenticate h1:hover {
+  color: #674ca1;
+}
+
+.centered-form__box {
+  background: #f7f7fa;
+  padding: 24px;
+  margin: 0 5px 0 0;
+  min-width: 250px;
+}
+
+.centered-form__previousPageLink {
+  font-size: 1.5em;
+  text-decoration: none;
 }
 
 .centered-form button {
@@ -112,6 +252,21 @@ i:hover {
   width: 100%;
 }
 
+.centered-form__signup {
+  margin: 15px 0 15px 0;
+}
+
+#loginForm,
+#joinForm {
+  display: none;
+  transition: all 5s 1s ease;
+}
+
+#login,
+#join {
+  cursor: pointer;
+}
+
 /* Chat Page Layout */
 
 .chat {
@@ -119,7 +274,10 @@ i:hover {
 }
 
 .chat__sidebar {
-  height: 100vh;
+  background: red;
+  display: inherit;
+  flex-direction: column;
+  height: calc(100vh - 53px);
   color: white;
   background: #333744;
   width: 225px;
@@ -135,6 +293,20 @@ i:hover {
   font-weight: 600;
 }
 
+.chat__sidebar button,
+.chat__sidebar input {
+  margin: 10px 0 0 0;
+}
+
+.bottom {
+  margin-top: 10px;
+  width: 180px;
+  display: inherit;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: center;
+}
+
 .chat__sidebar-info {
   opacity: 0;
   position: absolute;
@@ -146,7 +318,7 @@ i:hover {
   background-color: #7c5cbf;
   color: #f7f7fa;
   border-radius: 2px;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   box-shadow: 3px 3px 0px 1px #1d1f26;
 }
 
@@ -171,14 +343,13 @@ i:hover {
   background-color: #6b47b8;
 }
 
-
 /* Chat styles */
 
 .chat__main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  max-height: calc(100vh - 53px);
 }
 
 .chat__messages {
@@ -303,6 +474,60 @@ i:hover {
   text-align: center;
 }
 
+/* Account info & dashboard */
+
+.accountListing {
+  display: flex;
+  flex-direction: row;
+  min-width: 400px;
+}
+
+.accountListing-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: flex-start;
+  min-width: 400px;
+}
+
+.listing-rooms {
+  width: 100%;
+}
+
+.accountListing-left,
+.accountListing-right {
+  width: 50%;
+  height: 100%;
+}
+
+.accountListing-left p,
+.accountListing-right p {
+  margin-bottom: 5px;
+}
+
+.accountListing-left {
+  color: #2c2f3a;
+}
+
+.accountListing-right {
+  color: #674ca1;
+}
+
+.account__edit {
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.account__edit button {
+  width: 50%;
+  margin: 10px 5px;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
 /* Animations */
 
 @keyframes blinkingText {
@@ -320,4 +545,13 @@ i:hover {
 
 .blink {
   animation: blinkingText 3s 1;
+}
+
+@keyframes hideElement {
+  0% {
+    display: none;
+  }
+  100% {
+    display: block;
+  }
 }

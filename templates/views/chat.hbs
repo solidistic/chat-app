@@ -1,71 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Chat-app</title>
-    <link rel="stylesheet" href="/css/styles.css" />
-  </head>
-  <body>
-    <div class="chat">
-      <div id="sidebar" class="chat__sidebar"></div>
-      <div class="chat__main">
-        <div id="messages" class="chat__messages"></div>
-        <div id="information" class="chat__information"><p>asdasd</p></div>
-        <div id="alert" class="alert">Testiä</div>
-        <div class="compose">
-          <form id="chatForm">
-            <input
-              name="message"
-              type="text"
-              placeholder="Start chatting now!"
-              required
-              autocomplete="off"
-            />
-            <select name="reciever" id="messageReciever">
-            </select>
-            <button id="everyone" type="submit">Send</button>
-          </form>
-          <button id="send-location">Send location</button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Chat-app</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://kit.fontawesome.com/14b9bfad64.js"></script>
+</head>
+
+<body>
+  {{>navigation}}
+  <div class="chat">
+    <div id="sidebar" class="chat__sidebar">
+      <div id="users"></div>
+      <div id="rooms" class="chat__sidebar-rooms"></div>
+      <div class="bottom">
+        <input type="text" id="createRoomInput" placeholder="Room name" />
+        <button id="createRoomButton">Create room</button>
+      </div>
+      <div id="roomInfoWindow" class="chat__sidebar-info"></div>
+    </div>
+    <div class="chat__main">
+      <div id="messages" class="chat__messages"></div>
+      <div id="information" class="chat__information">
+        <p>asdasd</p>
+      </div>
+      <div id="alert" class="alert"></div>
+      <div class="compose">
+        <form id="chatForm">
+          <input name="message" id="messageInput" type="text" placeholder="Start chatting now!" required autocomplete="off" />
+          <select name="reciever" id="messageReciever"></select>
+          <button id="sendMessageButton" type="submit">Send</button>
+        </form>
+        <button id="send-location">Send location</button>
       </div>
     </div>
+  </div>
 
-    <script id="message-template" type="text/html">
+  <script id="message-template" type="text/x-handlebars-template">
       <div class="message">
         <p>
-          <span class="message__name">{{username}}</span>
-          <span class="message__meta">{{createdAt}}</span>
+          <span class="message__name">\{{username}}</span>
+          <span class="message__meta">\{{createdAt}}</span>
         </p>
-        <p>{{msg}}</p>
+        <p>\{{{msg}}}</p>
       </div>
     </script>
 
-    <script id="location-message-template" type="text/html">
+  <script id="private-message-template" type="text/x-handlebars-template">
+      <div class="message message-private">
+        <p>
+          <span class="message__name">private message from \{{username}}</span>
+          <span class="message__meta">\{{createdAt}}</span>
+        </p>
+        <p>\{{{msg}}}</p>
+      </div>
+    </script>
+
+  <script id="location-message-template" type="text/x-handlebars-template">
       <div class="message">
           <p>
-              <span class="message__name">{{username}}</span>
-              <span class="message__meta">{{createdAt}}</span>
+              <span class="message__name">\{{username}}</span>
+              <span class="message__meta">\{{createdAt}}</span>
             </p>
-        <p><a href="{{url}}" target="_blank"> My current location</a></p>
+        <p><a href="\{{url}}" target="_blank"> My current location</a></p>
       </div>
     </script>
 
-    <script id="sidebar-template" type="text/html">
-      <h2 class="room-title">{{room}}</h2>
-      <h3 class="list-title">Users</h3>
+  <script id="users-sidebar-template" type="text/x-handlebars-template">
+      <h2 class="room-title">\{{room}}</h2>
+      <h3 class="list-title"><i class="fas fa-users"></i>Users</h3>
       <ul class="users">
-        {{#users}}
-          <li>{{username}}</li>
-        {{/users}}
+        \{{#users}}
+          <li><i class="far fa-user"></i>\{{username}}</li>
+        \{{/users}}
       </ul>
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/chat.js"></script>
-  </body>
+  <script id="rooms-sidebar-template" type="text/x-handlebars-template">
+      <h3 class="list-title">All rooms</h3>
+      <ul id="roomsList" class="rooms">
+        \{{#rooms}}
+          <li>
+            <i class="fas fa-sign-in-alt"></i>\{{activeRoom}}
+            <span class="usersonline">\{{usersOnline}}</span>
+          </li>
+        \{{/rooms}}
+      </ul>
+    </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.2.0/handlebars.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/chat.js"></script>
+</body>
+
 </html>

@@ -1,7 +1,8 @@
-const socket = io();
+// const socket = io();
+const socket = io.connect("http://localhost:3000/chat");
 const $messageForm = document.querySelector("#chatForm");
-const $messageInput = document.querySelector("input");
-const $messageFormButton = document.querySelector("#everyone");
+const $messageInput = document.querySelector("#messageInput");
+const $messageFormButton = document.querySelector("#sendMessageButton");
 const $recieverSelect = document.querySelector("#messageReciever");
 const $sendLocationButton = document.querySelector("#send-location");
 const $messages = document.querySelector("#messages");
@@ -20,9 +21,25 @@ const usersSidebarTemplate = document.querySelector("#users-sidebar-template")
 const roomsSidebarTemplate = document.querySelector("#rooms-sidebar-template")
   .innerHTML;
 
-const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true
-});
+const setUsernameAndRoom = () => {
+  if (!location.search) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const values = decodedCookie
+      .split(/(^;)|=|(.\s)|(;$)/g)
+      .filter(node => node !== undefined)
+      .filter(node => node !== "; ");
+    const index = values.findIndex(index => index === "user");
+    const { username, room } = JSON.parse(
+      decodeURIComponent(values[index + 1])
+    );
+    return { username, room };
+  }
+  return Qs.parse(location.search, {
+    ignoreQueryPrefix: true
+  });
+};
+
+const { username, room } = setUsernameAndRoom();
 
 const animateElement = (elem, text, animationName) => {
   const classlistCheckForBlink = elem.classList
@@ -89,11 +106,14 @@ socket.on("usersList", users => {
 
 socket.on("message", message => {
   console.log(message);
+
+  Mustache.parse(messageTemplate);
   const html = Mustache.render(messageTemplate, {
     username: message.username,
     msg: message.text,
     createdAt: moment(message.createdAt).format("HH:mm")
   });
+
   $messages.insertAdjacentHTML("beforeend", html);
   autoscroll();
 });
@@ -160,7 +180,7 @@ socket.on("activeRooms", rooms => {
   });
   $sidebar.querySelector("#rooms").innerHTML = html;
 
-  // show info window when hovering on room name
+  // show info window when clicking on room name
   const ul = $sidebar.querySelector("#roomsList");
   const $infoWindow = $sidebar.querySelector("#roomInfoWindow");
   ul.childNodes.forEach(node => {
@@ -173,7 +193,7 @@ socket.on("activeRooms", rooms => {
 
         $infoWindow.style.top = li.top + "px";
         $infoWindow.style.left = li.left + 180 + "px";
-        $infoWindow.value === roomName &&
+        $infoWindow.value === roomName && 
         $infoWindow.classList.toString().includes("chat__sidebar-infoShow")
           ? $infoWindow.classList.remove("chat__sidebar-infoShow")
           : $infoWindow.classList.add("chat__sidebar-infoShow");
@@ -196,8 +216,11 @@ socket.on("activeRooms", rooms => {
   });
 });
 
-const joinRoom = newRoom => {
-  location.href = `/chat.html?username=${username}&room=${newRoom}`;
+const joinRoom = (newRoom, currentUser) => {
+  if (!newRoom || !username) {
+    return location.href = `/chat?username=${currentUser}&room=${newRoom}`;
+  }
+  location.href = `/chat?username=${username}&room=${newRoom}`;
 };
 
 $messageInput.addEventListener("keypress", () => {
@@ -265,7 +288,13 @@ $sendLocationButton.addEventListener("click", () => {
   });
 });
 
+document.querySelector("#createRoomButton").addEventListener("click", () => {
+  const room = document.querySelector("#createRoomInput").value;
+  joinRoom(room, username);
+});
+
 socket.emit("join", { username, room }, error => {
+  console.log(username, room);
   if (error) {
     alert(error);
     location.href = "/";

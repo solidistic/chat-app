@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://kit.fontawesome.com/14b9bfad64.js"></script>
+</head>
+
+<body>
+  {{>navigation}}
+  <div class="centered-form">
+    <div class="centered-form__box">
+      <h1>Your account</h1>
+      <p class="message-success">{{message}}</p>
+      <p class="message-error">{{error}}</p>
+      <div class="accountListing">
+        <div class="accountListing-left">
+          <p class="bolder">Account name</p>
+          <p class="bolder">Email</p>
+        </div>
+        <div class="accountListing-right">
+          <p>{{username}}</p>
+          <p>{{email}}</p>
+        </div>
+      </div>
+
+      <div class="account__edit">
+        <button onclick="openLink('/users/account/changepw')">Change password</button>
+        <button>Change email</button>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function openLink(url){
+      location.href = url;
+    }
+  </script>
+</body>
+
+</html>

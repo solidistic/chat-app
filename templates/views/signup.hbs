@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Chat-app - Sign up, create an account</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://kit.fontawesome.com/14b9bfad64.js"></script>
+
+</head>
+
+<body>
+  {{>navigation}}
+  <div class="centered-form">
+    <div class="centered-form__box">
+      <div><a href="/" class="centered-form__previousPageLink"><i class="fas fa-angle-left"></i>
+          Back</a></div>
+      <hr>
+      <h1>Create an account</h1>
+      <form action="/users" method="post" enctype="application/json">
+        <label>Display name</label>
+        <input type="text" placeholder="Display name" name="username" id="username" required />
+        <label>Password</label>
+        <input type="password" name="password" id="password" placeholder="Provide atleast 8 characters" required />
+        <label>Email</label>
+        <input type="text" name="email" id="email" placeholder="Your email address" required />
+        <input type="submit" value="Sign up" />
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

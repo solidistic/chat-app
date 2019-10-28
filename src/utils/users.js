@@ -3,16 +3,16 @@ const { addUserToRoom, removeUserFromList } = require("./rooms");
 const users = [];
 
 const addUser = ({ id, username, room }) => {
-  // Clean the data
-  username = username.trim().toLowerCase();
-  room = room.trim().toLowerCase();
-
   // Validate the data
   if (!username || !room) {
     return {
       error: "Username and room are required"
     };
   }
+
+  // Clean the data
+  username = username.trim().toLowerCase();
+  room = room.trim().toLowerCase();
 
   // Check for existing user
   const existingUser = users.find(user => {
@@ -42,11 +42,11 @@ const removeUser = id => {
 };
 
 const getUser = id => {
-  return user = users.find(user => user.id === id);
+  return (user = users.find(user => user.id === id));
 };
 
 const getUserByName = username => {
-  return user = users.find(user => user.username === username);
+  return (user = users.find(user => user.username === username));
 };
 
 const getUsersInSameRoom = room => {
@@ -60,4 +60,4 @@ module.exports = {
   getUser,
   getUsersInSameRoom,
   getUserByName
-}
+};

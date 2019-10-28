@@ -1,5 +1,3 @@
-const users = require("./users");
-
 let rooms = [];
 
 const getActiveRooms = () => {

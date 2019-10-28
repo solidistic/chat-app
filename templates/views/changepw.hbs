@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Chat-app - Sign up, create an account</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="https://kit.fontawesome.com/14b9bfad64.js"></script>
+
+</head>
+
+<body>
+  {{>navigation}}
+  <div class="centered-form">
+    <div class="centered-form__box">
+      <div><a href="/users/account" class="centered-form__previousPageLink"><i class="fas fa-angle-left"></i>
+          Back</a></div>
+      <hr>
+      <h1>Change your password</h1>
+      <form action="/users/account" method="GET" enctype="application/json">
+        <label>Current password</label>
+        <input type="password" placeholder="Current password" name="oldpassword" id="oldpassword" minlength="8" required />
+        <label>New password</label>
+        <input type="password" name="password" id="password" placeholder="Provide atleast 8 characters" minlength="8"
+          required />
+        <label>Repeat new password</label>
+        <input type="password" name="repeatPassword" id="repeatPassword" placeholder="Match the password" minlength="8"
+          required />
+        <p id="error" class="message-error"></p>
+        <input type="submit" value="Change password" />
+      </form>
+    </div>
+  </div>
+  <script src="../../js/updates.js"></script>
+</body>
+
+</html>
