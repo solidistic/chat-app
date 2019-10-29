@@ -528,6 +528,10 @@ nav a:hover {
   font-weight: bolder;
 }
 
+.padding-10 {
+  padding: 10px;
+}
+
 /* Animations */
 
 @keyframes blinkingText {

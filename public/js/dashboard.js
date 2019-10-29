@@ -54,20 +54,26 @@ dashboard.on("activeRooms", rooms => {
         const li = this.getBoundingClientRect();
 
         $infoWindow.style.top = li.top + "px";
-        $infoWindow.style.left = li.left + 180 + "px";
-        $infoWindow.value === roomName && 
+        $infoWindow.style.left = li.left + 380 + "px";
+        $infoWindow.value === roomName &&
         $infoWindow.classList.toString().includes("chat__sidebar-infoShow")
           ? $infoWindow.classList.remove("chat__sidebar-infoShow")
           : $infoWindow.classList.add("chat__sidebar-infoShow");
         $infoWindow.value = roomName;
-        $infoWindow.innerHTML = `<h4>Users online in ${roomName}:</h4>`;
+        $infoWindow.innerHTML = "";
 
-        rooms[index].connectedUsers.forEach(user => {
-          $infoWindow.insertAdjacentHTML(
-            "beforeend",
-            `<i class="far fa-user"></i>${user.username}</br>`
-          );
-        });
+        if (rooms[index].connectedUsers > 0) {
+          $infoWindow.innerHTML = `<h4>Users online in ${roomName}:</h4>`;
+
+          rooms[index].connectedUsers.forEach(function(user) {
+            $infoWindow.insertAdjacentHTML(
+              "beforeend",
+              `<i class="far fa-user"></i>${user.username}</br>`
+            );
+          });
+        } else {
+          $infoWindow.insertAdjacentHTML("beforeend", "<p>Nobody online</p>");
+        }
 
         $infoWindow.insertAdjacentHTML(
           "beforeend",
