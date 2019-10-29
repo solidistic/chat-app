@@ -1,4 +1,4 @@
-const dashboard = io.connect("http://localhost:3000/dashboard");
+const dashboard = io.connect(window.location.href);
 
 const $roomname = document.querySelector("#roomNameInput");
 const $roomsList = document.querySelector("#roomsDiv");

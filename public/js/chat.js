@@ -1,5 +1,5 @@
 // const socket = io();
-const socket = io.connect("http://localhost:3000/chat");
+const socket = io.connect(window.location.href);
 const $messageForm = document.querySelector("#chatForm");
 const $messageInput = document.querySelector("#messageInput");
 const $messageFormButton = document.querySelector("#sendMessageButton");
