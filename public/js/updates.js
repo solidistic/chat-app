@@ -5,21 +5,6 @@ const [oldPw, newPw, repeatNewPw] = Array.from(
 );
 const inputs = Array.from(document.querySelectorAll("input"));
 
-// inputs.forEach(node => {
-//   node.addEventListener("input", e => {
-//     if (newPw.value && repeatNewPw.value) {
-//       if (newPw.value === repeatNewPw.value)
-//         return document
-//           .querySelector("input[type='submit']")
-//           .removeAttribute("disabled");
-
-//       document
-//         .querySelector("input[type='submit']")
-//         .setAttribute("disabled", "disabled");
-//     }
-//   });
-// });
-
 const validateNewPassword = () => {
   if (newPw.value && repeatNewPw.value) {
     if (newPw.value !== repeatNewPw.value) {

@@ -34,8 +34,6 @@ router.get("/", async (req, res) => {
 router.get("/dashboard", authentication, async (req, res) => {
   // console.log("req.user", req.user);
   try {
-    // const user = await User.findById(req.session.userId);
-
     if (!req.user) {
       throw new Error("Please authenticate");
     }
@@ -55,8 +53,6 @@ router.get("/dashboard", authentication, async (req, res) => {
 router.get("/chat", async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
-    console.log(req.query);
-    console.log("user", user);
 
     if (!user && !req.query.username)
       throw new Error("You must provide a username");
