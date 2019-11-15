@@ -1,9 +1,7 @@
 // TODO: shouldn't be able to write html in chat
-//* TODO: DB with authentication
 // TODO: DB save room converstations
-//* TODO: Forgot password
+// TODO: Forgot password
 // TODO: Join multiple rooms
-//* TODO: Create room option in chat.html
 
 require("./db/mongoose");
 
