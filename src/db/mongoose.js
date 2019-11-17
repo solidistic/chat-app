@@ -2,12 +2,16 @@
 
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .catch(e => {
+    console.log("Unable to connect to database: " + e);
+  });
 
 const db = mongoose.connection;
 

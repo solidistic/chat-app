@@ -17,6 +17,7 @@ const server = http.createServer(app);
 require("./socketio/sockets").listen(server);
 
 const port = process.env.PORT || 3000;
+const host = "0.0.0.0";
 const publicDirPath = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
 const partialsPath = path.join(__dirname, "../templates/partials");
@@ -34,6 +35,6 @@ requirejs.config({
   nodeRequire: require
 });
 
-server.listen(port, () => {
-  console.log(`Server up and running on port ${port}`);
+server.listen(port, host, () => {
+  console.log(`Server up and running on http://${host}:${port}/`);
 });

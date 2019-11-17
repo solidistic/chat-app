@@ -1,0 +1,29 @@
+version: "3"
+services:
+  database:
+    image: mongo:latest
+    container_name: "mongodb"
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-network
+    volumes:
+      - db-data:/var/lib/mongodb/data
+  
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "chat-app"
+    environment:
+      - MONGODB_URL='mongodb://mongodb:27017/chat-database'
+    ports:
+      - "3000:3000"
+    networks:
+      - mongo-network
+    
+networks:
+  mongo-network:
+
+volumes:
+  db-data:
